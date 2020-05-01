@@ -166,14 +166,14 @@ class MetricsCollector(object):
             labels=['dag_id', 'task_id', 'metric'],
         )
 
-        xcom_config = load_xcom_config(os.getenv('AIRFLOW_HOME') + '/prometheus_exporter.yaml')
+        xcom_config = load_xcom_config(os.getenv('AIRFLOW_HOME') + '/dags/data_flows/prometheus_exporter.yaml')
         for tasks in xcom_config.get("xcom_params", []):
             for param in get_xcom_params(tasks["task_id"]):
                 xcom_value = extract_xcom_parameter(param.value)
 
                 if tasks["key"] in xcom_value:
                     xcom_params.add_metric(
-                        [param.dag_id, param.task_id], xcom_value[tasks["key"]]
+                        [param.dag_id, param.task_id, tasks["key"]], xcom_value[tasks["key"]]
                     )
 
 
