@@ -178,8 +178,8 @@ class MetricsCollector(object):
                                 [param.dag_id, param.task_id, tasks["key"], k], v
                             )
                     except Exception:
-					    # Don't fail if dag reports wrong values
-					    pass
+                        # Don't fail if dag reports wrong values
+                        pass
 
         yield xcom_params
 
