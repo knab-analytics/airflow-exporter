@@ -111,7 +111,7 @@ def get_xcom_params(task_id):
          .subquery()
     )
 
-    query = Session.query(XCom.dag_id, XCom.task_id, XCom.value).join(
+    query = Session.query(XCom.dag_id, XCom.task_id, XCom.key, XCom.value).join(
         max_execution_dt_query,
         and_(
             (XCom.dag_id == max_execution_dt_query.c.dag_id),
