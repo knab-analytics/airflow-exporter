@@ -163,7 +163,7 @@ class MetricsCollector(object):
         xcom_params = GaugeMetricFamily(
             'airflow_xcom_parameter',
             'Airflow Xcom Parameter',
-            labels=['dag_id', 'task_id', 'metric', 'column'],
+            labels=['dag_id', 'task_id', 'xcom_key', 'metric', 'column'],
         )
 
         xcom_config = load_xcom_config(os.getenv('AIRFLOW_HOME') + '/dags/data_flows/prometheus_exporter.yaml')
@@ -175,7 +175,7 @@ class MetricsCollector(object):
                     try:
                         for k, v in xcom_value[tasks["key"]].items():
                             xcom_params.add_metric(
-                                [param.dag_id, param.task_id, tasks["key"], k], v
+                                [param.dag_id, param.task_id, param.key, tasks["key"], k], v
                             )
                     except Exception:
                         # Don't fail if dag reports wrong values
